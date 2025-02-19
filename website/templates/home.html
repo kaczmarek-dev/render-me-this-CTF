@@ -4,15 +4,22 @@
 <ul class="list-group list-group-flush" id="reports">
   {% for report in user.reports %}
   <li class="list-group-item">
+    {{ report.title }}
     {{ report.data }}
+    {{ report.filename }}
+    {{ report.img|safe }}
     <button type="button" class="close" onClick="deleteReport({{ report.id }})">
       <span aria-hidden="true">&times;</span>
     </button>
   </li>
   {% endfor %}
 </ul>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
+  <input type='text' name="title" id="title" class="form-control"></textarea>
   <textarea name="report" id="report" class="form-control"></textarea>
+  <div align="center">
+    <input type="file" name="file"/>
+  </div>
   <br />
   <div align="center">
     <button type="submit" class="btn btn-primary">Add Report</button>
