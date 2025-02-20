@@ -1,4 +1,5 @@
 from . import db
+from sqlalchemy import event
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
@@ -13,5 +14,9 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    is_admin = db.Column(db.Integer)
     reports = db.relationship('Report')
+    role = db.Column(db.Integer, db.ForeignKey('role.id'))
+
+class Role(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)

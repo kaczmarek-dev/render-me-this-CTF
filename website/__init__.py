@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from flask_security import Security, SQLAlchemySessionUserDatastore
+
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -12,9 +14,10 @@ def create_app():
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
+    
 
-    from .models import User, Report
-    from .init_defaults import init_defaults
+    from .models import User, Report, Role
+    from .init_defaults import init_defaults, create_roles
     from .views import views
     from .auth import auth
 
@@ -24,7 +27,9 @@ def create_app():
     
     with app.app_context():
         db.create_all()
+        create_roles()
         init_defaults()
+
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

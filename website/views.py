@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Report
 from . import db
 import json
+from .utils import admin_required
 
 views = Blueprint('views', __name__)
 
@@ -38,5 +39,6 @@ def delete_report():
 
 @views.route('/admin', methods=['GET'])
 @login_required
+@admin_required
 def admin():
     return render_template("admin.html", user=current_user)
