@@ -4,11 +4,8 @@ from .models import Report
 from . import db
 from werkzeug.utils import secure_filename
 import json
-<<<<<<< HEAD
 from .utils import admin_required
-=======
 from .upload_check import upload_check
->>>>>>> b2b626d410aa658cdb9956669dd310deaa8aa53d
 
 views = Blueprint('views', __name__)
 
