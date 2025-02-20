@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Report
+from .models import Report, User
 from . import db
 from werkzeug.utils import secure_filename
 import json
@@ -13,25 +13,28 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    if request.method == 'POST': 
+    if(current_user.role == 0):
+        return render_template("home_admin.html", user=current_user)
+    else:
+        if request.method == 'POST': 
 
-        title = request.form.get('title')
-        report = request.form.get('report')
-        file = request.files.get('file')
+            title = request.form.get('title')
+            report = request.form.get('report')
+            file = request.files.get('file')
 
-        new_report = Report(title=title,
-                            data=report, 
-                            img=file.read(), 
-                            filename=secure_filename(file.filename), 
-                            mimetype=file.mimetype, 
-                            user_id=current_user.id)
-        
-        if upload_check(new_report) == True:
-            db.session.add(new_report)
-            db.session.commit()
-            flash('Report added!', category='success')
+            new_report = Report(title=title,
+                                data=report, 
+                                img=file.read(), 
+                                filename=secure_filename(file.filename), 
+                                mimetype=file.mimetype, 
+                                user_id=current_user.id)
+            
+            if upload_check(new_report) == True:
+                db.session.add(new_report)
+                db.session.commit()
+                flash('Report added!', category='success')
 
-    return render_template("home.html", user=current_user)
+        return render_template("home.html", user=current_user)
 
 @views.route('/reports', methods=['GET'])
 @login_required
@@ -55,4 +58,5 @@ def delete_report():
 @login_required
 @admin_required
 def admin():
-    return render_template("admin.html", user=current_user)
+    userList = User.query.all()
+    return render_template("admin.html", user=userList)
