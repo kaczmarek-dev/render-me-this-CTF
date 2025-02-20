@@ -2,8 +2,13 @@ from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from .models import Report
 from . import db
+from werkzeug.utils import secure_filename
 import json
+<<<<<<< HEAD
 from .utils import admin_required
+=======
+from .upload_check import upload_check
+>>>>>>> b2b626d410aa658cdb9956669dd310deaa8aa53d
 
 views = Blueprint('views', __name__)
 
@@ -12,22 +17,31 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if request.method == 'POST': 
-        report = request.form.get('report')#Gets the report from the HTML 
 
-        if len(report) < 1:
-            flash('Report is too short!', category='error') 
-        else:
-            new_report = Report(data=report, user_id=current_user.id)  #providing the schema for the report 
-            db.session.add(new_report) #adding the report to the database 
+        title = request.form.get('title')
+        report = request.form.get('report')
+        file = request.files.get('file')
+
+        new_report = Report(title=title,
+                            data=report, 
+                            img=file.read(), 
+                            filename=secure_filename(file.filename), 
+                            mimetype=file.mimetype, 
+                            user_id=current_user.id)
+        
+        if upload_check(new_report) == True:
+            db.session.add(new_report)
             db.session.commit()
             flash('Report added!', category='success')
+        else:
+            flash('Report not created!', category='error')
 
     return render_template("home.html", user=current_user)
 
 
 @views.route('/delete-report', methods=['POST'])
 def delete_report():  
-    report = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    report = json.loads(request.data)
     reportId = report['reportId']
     report = Report.query.get(reportId)
     if report:
