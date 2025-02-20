@@ -29,11 +29,13 @@ def home():
             db.session.add(new_report)
             db.session.commit()
             flash('Report added!', category='success')
-        else:
-            flash('Report not created!', category='error')
 
     return render_template("home.html", user=current_user)
 
+@views.route('/reports', methods=['GET'])
+@login_required
+def reports():
+    return render_template("reports.html", user=current_user)
 
 @views.route('/delete-report', methods=['POST'])
 def delete_report():  
