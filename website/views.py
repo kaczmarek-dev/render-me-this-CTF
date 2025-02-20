@@ -4,6 +4,7 @@ from .models import Report
 from . import db
 from werkzeug.utils import secure_filename
 import json
+from .upload_check import upload_check
 
 views = Blueprint('views', __name__)
 
@@ -14,33 +15,29 @@ def home():
     if request.method == 'POST': 
 
         title = request.form.get('title')
-        report = request.form.get('report')#Gets the report from the HTML 
+        report = request.form.get('report')
         file = request.files.get('file')
 
-        if len(report) < 1:
-            flash('Report is too short!', category='error') 
-        elif len(title) < 1:
-            flash('Title is too short!', category='error')
-        else:
-            filename = secure_filename(file.filename)
-            mimetype = file.mimetype
-
-            new_report = Report(title=title,
-                                data=report, 
-                                img=file.read(), 
-                                filename=filename, 
-                                mimetype=mimetype, 
-                                user_id=current_user.id)  #providing the schema for the report 
-            db.session.add(new_report) #adding the report to the database 
+        new_report = Report(title=title,
+                            data=report, 
+                            img=file.read(), 
+                            filename=secure_filename(file.filename), 
+                            mimetype=file.mimetype, 
+                            user_id=current_user.id)
+        
+        if upload_check(new_report) == True:
+            db.session.add(new_report)
             db.session.commit()
             flash('Report added!', category='success')
+        else:
+            flash('Report not created!', category='error')
 
     return render_template("home.html", user=current_user)
 
 
 @views.route('/delete-report', methods=['POST'])
 def delete_report():  
-    report = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    report = json.loads(request.data)
     reportId = report['reportId']
     report = Report.query.get(reportId)
     if report:
