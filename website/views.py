@@ -4,6 +4,7 @@ from .models import Report
 from . import db
 from werkzeug.utils import secure_filename
 import json
+from .utils import admin_required
 from .upload_check import upload_check
 
 views = Blueprint('views', __name__)
@@ -51,5 +52,6 @@ def delete_report():
 
 @views.route('/admin', methods=['GET'])
 @login_required
+@admin_required
 def admin():
     return render_template("admin.html", user=current_user)
