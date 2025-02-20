@@ -12,6 +12,14 @@ def init_defaults():
             )
         db.session.add(admin)
         db.session.commit()
+
+        user = User(
+            username="user",
+            password=generate_password_hash("user", method='pbkdf2:sha256'),
+            role=1
+            )
+        db.session.add(user)
+        db.session.commit()
         print("Admin created successfully!")
 
 def create_roles():
