@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}"> 
 <div class="container-xxl">
   <h1 align="center">Reports</h1>
-  {% for user in user %}
+  {% for user in user_list %}
     {% for report in user.reports %}
     <div class="card mb-3">
       <div class="row g-0">

@@ -19,7 +19,7 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if(current_user.role == 0):
-        return render_template("home_admin.html", user=current_user)
+        return render_template("report_submition_admin.html", user=current_user)
     else:
         if request.method == 'POST': 
 
@@ -44,7 +44,7 @@ def home():
                     session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'     
                 )
 
-        return render_template("home.html", user=current_user)
+        return render_template("report_submition.html", user=current_user)
 
 
 @views.route('/reports', methods=['GET'])
@@ -56,7 +56,7 @@ def reports():
 
 @views.route('/report/<report_id>', methods=['GET'])
 @login_required
-@admin_required
+# @admin_required
 def report(report_id):
     print(report_id)
     report = Report.query.get(report_id)
@@ -84,4 +84,4 @@ def delete_report():
 @admin_required
 def admin():
     userList = User.query.all()
-    return render_template("admin.html", user=userList)
+    return render_template("admin.html", user=current_user, user_list=userList)

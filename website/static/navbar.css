@@ -10,6 +10,19 @@ nav {
 	position: relative;
 }
 
+button {
+	border-radius: 20px;
+	border: 1px solid #FF4B2B;
+	background-color: #FF4B2B;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
 .nav-item {
     border-radius: 20px;
     border: 1px solid #FF416C;
@@ -20,6 +33,12 @@ nav {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+}
+
+.notification {
+    top: 2%;
+    width: 1076px; 
+    text-align: center;
 }
 
 button:active {
