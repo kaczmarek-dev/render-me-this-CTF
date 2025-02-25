@@ -8,12 +8,6 @@ import sys
 import json
 
 
-# with open('config.json', "r") as file:
-#     content = file.read()
-#     config = json.loads(content)
-
-
-
 def visit_with_cookies(page_to_load, session_cookie):
     print('visit_with_cookies called', flush=True)
 
@@ -21,6 +15,7 @@ def visit_with_cookies(page_to_load, session_cookie):
     #     executable_path="/home/miki/Documents/learn/render-me-this-CTF/website/geckodriver", 
     #     service_log_path="/home/miki/Documents/learn/render-me-this-CTF/website/geckodriver.log"
     #     )
+    print(page_to_load)
     options = Options()
     options.headless = True
     browser = webdriver.Chrome(options = options)
@@ -60,7 +55,15 @@ def time_limit(seconds):
     finally:
         signal.alarm(0)
 
-
+def visit_with_cookies_time_limit(max_time_seconds, url, session_cookie):
+    try:
+        with time_limit(max_time_seconds):
+            visit_with_cookies(
+        page_to_load=url,
+        session_cookie=session_cookie
+        )
+    except TimeoutException as e:
+        print("Timed out!")
 
 
 if __name__ == "__main__":
@@ -68,8 +71,8 @@ if __name__ == "__main__":
     try:
         with time_limit(2):
             visit_with_cookies(
-        page_to_load="http://127.0.0.1:5000/reports",
-        session_cookie='.eJwlzkkKAjEQAMC_5Oyh01vSfkaSXlDwNIMn8e8KUh-od7vVkee9XWs9z7y02yPate20ObukmszakOGykMy40ywfMpNAxddPTdrFY2xDkEG8w516mSKkTtcaCsIqpqbMPZesTehWK4KDR3VGVAFAWiLge3BE-0VeZx7_DbbPF9ybLw8.Z7dJog.yNond60Yr0AEMOMZbM_6R0Njycs'
+        page_to_load="http://127.0.0.1:5000/report/1",
+        session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'
         )
     except TimeoutException as e:
         print("Timed out!")

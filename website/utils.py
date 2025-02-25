@@ -3,15 +3,17 @@ from flask_login import current_user
 from flask import Response
 
 def admin_required(function):
-    def decorator_admin(*args, **kwargs):
+    def wrapper_admin(*args, **kwargs):
         if current_user.role != 0:
             return Response(status=403)
         return function(*args, **kwargs)
-    return decorator_admin
+    wrapper_admin.__name__ = function.__name__
+    return wrapper_admin
 
 def user_required(function):
-    def decorator_user(*args, **kwargs):
+    def wrapper_user(*args, **kwargs):
         if current_user.role != 1:
             return Response(status=403)
         return function(*args, **kwargs)
-    return decorator_user
+    wrapper_user.__name__ = function.__name__
+    return wrapper_user
