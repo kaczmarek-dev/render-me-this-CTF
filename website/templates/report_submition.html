@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='report_submition.css') }}">
 <div class="container">  
   <h1>Submit a report</h1>
   <form method="POST" enctype="multipart/form-data">
@@ -15,9 +15,6 @@
       id="report" 
       class="form-control"
       placeholder="Enter description"></textarea>
-    
-    <div align="center">
-    </div>
     
     <label class="upload-area">
       <input hidden type="file" name="file"/>

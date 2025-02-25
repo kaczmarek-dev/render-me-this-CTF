@@ -4,19 +4,19 @@
   <h1 align="center">Reports</h1>
   {% for report in user.reports %}
   <div class="reports">
-    <div class="report-container">
-      <h2>{{ report.title }}</h2>
-      <div>{{ report.data }}</div>
-    </div>
-    <div class="report-container">
-      {{ report.img|safe }}
-      <div style="font-style: italic;">{{ report.filename }}</div>
+    <div class="report-container report-button">
+      <img src="data:{{ report.mimetype }};base64,{{ report.img }}">
+      <button class="report-button" onclick="location.href='/report/{{ report.id }}';">
+        <h2>{{ report.title }}</h2>
+        <div>{{ report.data }}</div>
+        <div style="font-style: italic; padding: 5px;">{{ report.filename }}</div>
+      </button>
+      <button class="delete-button"
+        onClick="deleteReport({{ report.id }})">
+        &times;
+      </button>
     </div>
     <!-- <div class="screenshot">{{ report.img|safe }}</div> -->
-    <button class="report-button"
-      onClick="deleteReport({{ report.id }})">
-      &times;
-    </button>
   </div>
   {% endfor %}
 </div>

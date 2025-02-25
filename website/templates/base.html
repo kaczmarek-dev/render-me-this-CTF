@@ -22,14 +22,14 @@
     {% if (user.role == 1) %}
     <nav>
       <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
-      <button class="nav-item" id="home" onclick="location.href='/';">Home</button>
+      <button class="nav-item" id="report_submition" onclick="location.href='/';">Report Submition</button>
       <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
     </nav>
     {% endif %}
     {% if (user.role == 0) %}
     <nav>
       <button class="nav-item" id="admin" onclick="location.href='/admin';">Admin</button>
-      <button class="nav-item" id="home" onclick="location.href='/';">Home</button>
+      <button class="nav-item" id="report_submition" onclick="location.href='/';">Report Submition</button>
       <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
     </nav>
     {% endif %}
@@ -37,14 +37,14 @@
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
-    <div class="alert alert-danger alter-dismissable fade show" role="alert" style="position: absolute; margin-top: 40px;">
+    <div class="alert alert-danger alter-dismissable fade show notification" role="alert" style="position: absolute; " >
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     {% else %}
-    <div class="alert alert-success alter-dismissable fade show" role="alert" style="position: absolute; margin-top: 40px;">
+    <div class="alert alert-success alter-dismissable fade show notification" role="alert" style="position: absolute; ">
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
