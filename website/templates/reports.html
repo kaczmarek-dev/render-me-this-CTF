@@ -1,14 +1,19 @@
 {% extends "base.html" %} {% block content%}
 <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}"> 
-<div class="container"> 
+<div class="container">
   <h1 align="center">Reports</h1>
   {% for report in user.reports %}
-  <div class="report-container">
-    {{ report.title }}
-    {{ report.data }}
-    {{ report.filename }}
-    {{ report.img|safe }}
-    <button 
+  <div class="reports">
+    <div class="report-container">
+      <h2>{{ report.title }}</h2>
+      <div>{{ report.data }}</div>
+    </div>
+    <div class="report-container">
+      {{ report.img|safe }}
+      <div style="font-style: italic;">{{ report.filename }}</div>
+    </div>
+    <!-- <div class="screenshot">{{ report.img|safe }}</div> -->
+    <button class="report-button"
       onClick="deleteReport({{ report.id }})">
       &times;
     </button>

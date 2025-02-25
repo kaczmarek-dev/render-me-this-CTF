@@ -1,19 +1,25 @@
 {% extends "base.html" %} {% block content %}
-<h1 align="center">Reports</h1>
-
-<ul class="list-group list-group-flush" id="reports">
+<link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}"> 
+<div class="container">
+  <h1 align="center">Reports</h1>
   {% for user in user %}
     {% for report in user.reports %}
-    <li class="list-group-item">
-      {{ report.title }}
-      {{ report.data }}
-      {{ report.filename }}
-      {{ report.img|safe }}
-      <button type="button" class="close" onClick="deleteReport({{ report.id }})">
-        <span aria-hidden="true">&times;</span>
+    <div class="reports">
+      <div class="report-container">
+        <h2>{{ report.title }}</h2>
+        <div>{{ report.data }}</div>
+      </div>
+      <div class="report-container">
+        <img src="data:{{ report.mimetype }};base64,{{ report.img }}">
+        <div style="font-style: italic;">{{ report.filename }}</div>
+      </div>
+      <!-- <div class="screenshot">{{ report.img|safe }}</div> -->
+      <button class="report-button"
+        onClick="deleteReport({{ report.id }})">
+        &times;
       </button>
-    </li>
+    </div>
     {% endfor %}
   {% endfor %}
-</ul>
+  </div>
 {% endblock %}

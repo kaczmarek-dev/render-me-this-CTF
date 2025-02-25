@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import json
 from .utils import admin_required, user_required
 from .upload_check import upload_check
+import base64
 
 views = Blueprint('views', __name__)
 
@@ -21,10 +22,11 @@ def home():
             title = request.form.get('title')
             report = request.form.get('report')
             file = request.files.get('file')
+            img = file.read()
 
             new_report = Report(title=title,
                                 data=report, 
-                                img=file.read(), 
+                                img=img, 
                                 filename=secure_filename(file.filename), 
                                 mimetype=file.mimetype, 
                                 user_id=current_user.id)

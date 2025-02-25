@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />  
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -18,37 +19,32 @@
     <title>{% block title %}render-me-this{% endblock %}</title>
   </head>
   <body>
-    {% if user.is_authenticated %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link" id="reports" href="/reports">Reports</a>
-          <a class="nav-item nav-link" id="home" href="/">Home</a>
-          <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
-        </div>
-      </div>
+    {% if (user.role == 1) %}
+    <nav>
+      <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
+      <button class="nav-item" id="home" onclick="location.href='/';">Home</button>
+      <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
+    </nav>
+    {% endif %}
+    {% if (user.role == 0) %}
+    <nav>
+      <button class="nav-item" id="admin" onclick="location.href='/admin';">Admin</button>
+      <button class="nav-item" id="home" onclick="location.href='/';">Home</button>
+      <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
     </nav>
     {% endif %}
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
     'error' %}
-    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+    <div class="alert alert-danger alter-dismissable fade show" role="alert" style="position: absolute; margin-top: 40px;">
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     {% else %}
-    <div class="alert alert-success alter-dismissable fade show" role="alert">
+    <div class="alert alert-success alter-dismissable fade show" role="alert" style="position: absolute; margin-top: 40px;">
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
@@ -80,7 +76,7 @@
     method: "POST",
     body: JSON.stringify({ reportId: reportId }),
   }).then((_res) => {
-    window.location.href = "/";
+    window.location.href = "/reports";
   });
   }
 </script>

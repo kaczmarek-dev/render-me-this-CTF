@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box;
+}
+
+nav {
+	margin-top: 100px;
+	border-radius: 10px;
+	position: relative;
+}
+
+.nav-item {
+    border-radius: 20px;
+    border: 1px solid #FF416C;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+button:focus {
+    outline: none;
+}
