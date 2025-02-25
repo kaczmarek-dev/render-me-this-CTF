@@ -1,23 +1,25 @@
 {% extends "base.html" %} {% block content%}
 <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}"> 
-<div class="container">
+<div class="container-xxl">
   <h1 align="center">Reports</h1>
   {% for report in user.reports %}
-  <div class="reports">
-    <div class="report-container">
-      <h2>{{ report.title }}</h2>
-      <div>{{ report.data }}</div>
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="data:{{ report.mimetype }};base64,{{ report.img }}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" >{{ report.title }}</h5>
+          <p class="card-text">{{ report.data }}</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          <a class="btn btn-primary" onClick="deleteReport('{{ report.id }}')">Remove Report</a>
+          <a href="#" class="btn btn-secondary">View Report</a>
+        </div>
+      </div>
     </div>
-    <div class="report-container">
-      {{ report.img|safe }}
-      <div style="font-style: italic;">{{ report.filename }}</div>
-    </div>
-    <!-- <div class="screenshot">{{ report.img|safe }}</div> -->
-    <button class="report-button"
-      onClick="deleteReport({{ report.id }})">
-      &times;
-    </button>
   </div>
+<br>
   {% endfor %}
 </div>
 {% endblock %}

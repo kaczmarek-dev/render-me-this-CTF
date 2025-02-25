@@ -26,11 +26,11 @@ def home():
             title = request.form.get('title')
             report = request.form.get('report')
             file = request.files.get('file')
-            img = file.read()
+            img = base64.b64encode(file.read())
 
             new_report = Report(title=title,
                                 data=report, 
-                                img=img, 
+                                img=img.decode("utf-8"), 
                                 filename=secure_filename(file.filename), 
                                 mimetype=file.mimetype, 
                                 user_id=current_user.id)
