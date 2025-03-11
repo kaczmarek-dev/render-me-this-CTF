@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, session, current_app
+from flask.sessions import SecureCookieSessionInterface
 from flask_login import login_required, current_user
 from .models import Report, User
 from . import db
@@ -8,9 +9,10 @@ from .utils import admin_required, user_required
 from .upload_check import upload_check
 import base64
 from flask import Response
-from .bot.admin_bot import visit_with_cookies_time_limit, visit_with_cookies
+from .bot.admin_bot import visit_with_cookies_time_limit, visit_with_cookies, get_session_cookie
 import threading
-
+import os
+from flask import current_app
 
 views = Blueprint('views', __name__)
 
@@ -25,23 +27,27 @@ def home():
 
             title = request.form.get('title')
             report = request.form.get('report')
-            file = request.files.get('file')
+            file = request.files['file']
             img = base64.b64encode(file.read())
+            filename = secure_filename(file.filename)
 
             new_report = Report(title=title,
                                 data=report, 
                                 img=img.decode("utf-8"), 
-                                filename=secure_filename(file.filename), 
+                                filename=filename, 
                                 mimetype=file.mimetype, 
                                 user_id=current_user.id)
+            
+            file.stream.seek(0)
+            file.save(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], filename))
             
             if upload_check(new_report) == True:
                 db.session.add(new_report)
                 db.session.commit()
                 flash('Report added!', category='success')
                 visit_with_cookies(
-                    page_to_load=f'http://127.0.0.1:5000/report/{new_report.id}', 
-                    session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'     
+                    page_to_load=f'http://127.0.0.1:5000/static/images/{filename}', 
+                    session_cookie=get_session_cookie("127.0.0.1:5000", "admin", "admin")
                 )
 
         return render_template("report_submition.html", user=current_user)
@@ -51,6 +57,9 @@ def home():
 @login_required
 @user_required
 def reports():
+    session_serializer = SecureCookieSessionInterface().get_signing_serializer(current_app)
+    session_cookie = session_serializer.dumps(dict(session))
+    print(session_cookie)
     return render_template("reports.html", user=current_user)
 
 
@@ -83,5 +92,7 @@ def delete_report():
 @login_required
 @admin_required
 def admin():
+    session_tmp = session
+    print(session_tmp)
     userList = User.query.all()
     return render_template("admin.html", user=current_user, user_list=userList)

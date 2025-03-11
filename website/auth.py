@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for,session
 from .models import User, Role
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db   ##means from __init__.py import db
@@ -13,6 +13,7 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        session['username'] = request.form['username']
 
         user = User.query.filter_by(username=username).first()
         if user:

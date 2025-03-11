@@ -6,11 +6,11 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import sys
 import json
+import requests
 
 
 def visit_with_cookies(page_to_load, session_cookie):
     print('visit_with_cookies called', flush=True)
-
     # service = Service(
     #     executable_path="/home/miki/Documents/learn/render-me-this-CTF/website/geckodriver", 
     #     service_log_path="/home/miki/Documents/learn/render-me-this-CTF/website/geckodriver.log"
@@ -39,6 +39,16 @@ def visit_with_cookies(page_to_load, session_cookie):
     print('visit_with_cookies function successfully executed', flush=True)
 
 
+def get_session_cookie(ip_and_port, username, password):
+    res = requests.post(
+        url=f"http://{ip_and_port}/login",
+        data={
+            "username": username,
+            "password": password
+        }
+    )
+    return res.cookies["session"]
+
 import signal
 from contextlib import contextmanager
 
@@ -66,14 +76,16 @@ def visit_with_cookies_time_limit(max_time_seconds, url, session_cookie):
         print("Timed out!")
 
 
+
 if __name__ == "__main__":
 
-    try:
-        with time_limit(2):
-            visit_with_cookies(
-        page_to_load="http://127.0.0.1:5000/report/1",
-        session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'
-        )
-    except TimeoutException as e:
-        print("Timed out!")
+    # try:
+    #     with time_limit(2):
+    #         visit_with_cookies(
+    #     page_to_load="http://127.0.0.1:5000/report/1",
+    #     session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'
+    #     )
+    # except TimeoutException as e:
+    #     print("Timed out!")
+    print(login("127.0.0.1:5000", "admin", "admin"))
     

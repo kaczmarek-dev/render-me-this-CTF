@@ -5,12 +5,6 @@
 	box-sizing: border-box;
 }
 
-img {
-	max-width: 30%;
-	max-height: 30%;
-	text-align: center;
-}
-
 body {
 	background: #f6f5f7;
 	display: flex;
@@ -53,7 +47,7 @@ button.ghost {
 	border-color: #FFFFFF;
 }
 
-.container-xxl {
+.container {
     background-color: #fff;
 	border-radius: 10px;
 	padding: 0 50px;
@@ -79,18 +73,4 @@ button.ghost {
 	width: 80%;
 	min-height: 200px;
 	overflow-wrap: break-word;
-}
-
-.report-button{
-	border-radius: 20px;
-	text-align: start;
-	border: transparent;
-	background-color: transparent;
-	color: black;
-	transition: transform 80ms ease-in;
-}
-
-.delete-button {
-	position: absolute;
-	right: 10%;
 }
