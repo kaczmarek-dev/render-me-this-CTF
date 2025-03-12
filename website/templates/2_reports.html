@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "0_base.html" %} {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}"> 
 <div class="container">
   <h1 align="center">Reports</h1>
@@ -7,15 +7,15 @@
     <div class="card mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="data:{{ report.mimetype }};base64,{{ report.img }}" class="img-fluid rounded-start" alt="...">
+          <img src="/static/images/{{report.filename}}" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title" >{{ report.title }}</h5>
-            <p class="card-text">{{ report.data }}</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <p class="card-text">{{ report.description }}</p>
+            <p class="card-text"><small class="text-muted">Created at {{ report.time_created }}</small></p>
             <a href="#" class="btn btn-primary" onClick="deleteReport('{{ report.id }}')">Remove Report</a>
-            <a href="#" class="btn btn-secondary">View Report</a>
+            <a href="/static/images/{{report.filename}}" class="btn btn-secondary" >View Image</a>
           </div>
         </div>
       </div>

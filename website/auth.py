@@ -13,20 +13,20 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        session['username'] = request.form['username']
+        session['username'] = username
 
         user = User.query.filter_by(username=username).first()
         if user:
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('views.report_submition'))
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('Username does not exist.', category='error')
 
-    return render_template("login.html", user=current_user)
+    return render_template("1_login.html", user=current_user)
 
 
 @auth.route('/logout')
@@ -62,6 +62,6 @@ def sign_up():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.report_submition'))
 
-    return render_template("sign_up.html", user=current_user)
+    return render_template("1_sign_up.html", user=current_user)

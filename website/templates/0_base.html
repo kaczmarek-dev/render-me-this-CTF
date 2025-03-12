@@ -19,6 +19,7 @@
     <title>{% block title %}render-me-this{% endblock %}</title>
   </head>
   <body>
+    {% if url_for(request.endpoint) != "/login" and url_for(request.endpoint) != "/sign-up" %}
     {% if (user.role == 1) %}
     <nav>
       <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
@@ -28,10 +29,11 @@
     {% endif %}
     {% if (user.role == 0) %}
     <nav>
-      <button class="nav-item" id="admin" onclick="location.href='/admin';">Admin</button>
-      <button class="nav-item" id="report_submition" onclick="location.href='/';">Report Submition</button>
+      <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
+      <button class="nav-item" id="report_submition" onclick="location.href='/';">Admin Panel</button>
       <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
     </nav>
+    {% endif %}
     {% endif %}
 
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -72,9 +74,8 @@
 {% block javascript %}
     <script type="text/javascript">
       function deleteReport(reportId) {
-  fetch("/delete-report", {
-    method: "POST",
-    body: JSON.stringify({ reportId: reportId }),
+  fetch("/delete-report/" + reportId, {
+    method: "DELETE",
   }).then((_res) => {
     window.location.href = "/reports";
   });

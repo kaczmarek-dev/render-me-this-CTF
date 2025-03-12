@@ -10,9 +10,9 @@ def upload_check(report):
     elif len(report.title) > 100:
         flash('Title is too long!', category='error')
     #Data
-    elif len(report.data) < 1:
+    elif len(report.description) < 1:
         flash('Report is too short!', category='error')
-    elif len(report.data) > 10000:
+    elif len(report.description) > 10000:
         flash('Report is too long!', category='error')
     #Filename
     elif allowed_extension(report.filename) not in ALLOWED_EXTENSIONS:

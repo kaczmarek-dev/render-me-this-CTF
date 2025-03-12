@@ -1,4 +1,12 @@
-{% extends "base.html" %} {% block content %}
+{% extends "0_base.html" %} {% block content %}
+{% if user.role == 0 %}
+<link rel="stylesheet" href="{{ url_for('static', filename='report_submition.css') }}">
+<div class="container">
+    <div class="form-container sign-container">
+        <h1>Flag: miki</h1>
+    </div>
+</div>
+{% else %}
 <link rel="stylesheet" href="{{ url_for('static', filename='report_submition.css') }}">
 <div class="container">  
   <h1>Submit a report</h1>
@@ -36,4 +44,5 @@
     
   </form>
 </div>
+{% endif %}
 {% endblock %}

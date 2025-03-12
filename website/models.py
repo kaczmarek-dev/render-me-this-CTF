@@ -1,17 +1,14 @@
 from . import db
-from sqlalchemy import event
 from flask_login import UserMixin
-from sqlalchemy.sql import func
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
-    data = db.Column(db.String(10000))
-    img = db.Column(db.Text)
+    description = db.Column(db.String(10000))
     filename = db.Column(db.String(50))
     mimetype = db.Column(db.Text)
+    time_created = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
