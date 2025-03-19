@@ -7,6 +7,8 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = "database.db"
 UPLOAD_FOLDER = 'static/images/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
+ALLOWED_MIME_TYPE = {'image/png', 'image/jpeg', 'image/gif', 'image/svg+xml'}
 
 app = Flask(__name__)
 

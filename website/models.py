@@ -8,6 +8,7 @@ class Report(db.Model):
     filename = db.Column(db.String(50))
     mimetype = db.Column(db.Text)
     time_created = db.Column(db.String(20))
+    verified = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):

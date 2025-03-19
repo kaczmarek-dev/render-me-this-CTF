@@ -4,7 +4,7 @@ from .models import Report, User
 from . import db
 from .upload_check import upload_check
 from flask import Response
-from .bot.admin_bot import visit_with_cookies, get_session_cookie
+# from .bot.admin_bot import visit_with_cookies, get_session_cookie
 import os
 from flask import current_app
 import uuid
@@ -35,6 +35,7 @@ def report_submition():
                             filename=filename, 
                             mimetype=file.mimetype,
                             time_created=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            verified = False,
                             user_id=current_user.id)
         file.stream.seek(0)
         file.save(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], filename))
@@ -43,10 +44,6 @@ def report_submition():
             db.session.add(new_report)
             db.session.commit()
             flash('Report added!', category='success')
-            visit_with_cookies(
-                page_to_load=f'http://127.0.0.1:5000/static/images/{filename}', 
-                session_cookie=get_session_cookie("127.0.0.1:5000", "admin", "admin")
-            )
 
     return render_template("2_report_submition.html", user=current_user)
 

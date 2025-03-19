@@ -1,11 +1,8 @@
-from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-import sys
-import json
 import requests
 
 
@@ -17,7 +14,9 @@ def visit_with_cookies(page_to_load, session_cookie):
     #     )
     print(page_to_load)
     options = Options()
-    options.headless = True
+    options.add_argument("--headless")
+    options.add_argument("--user-data-dir=/tmp/user-data")
+    options.add_argument("--no-sandbox")
     browser = webdriver.Chrome(options = options)
     try:
         browser.set_page_load_timeout(2)
@@ -65,27 +64,13 @@ def time_limit(seconds):
     finally:
         signal.alarm(0)
 
-def visit_with_cookies_time_limit(max_time_seconds, url, session_cookie):
+def visit_with_cookies_time_limit(max_time_seconds, page_to_load, session_cookie):
     try:
         with time_limit(max_time_seconds):
             visit_with_cookies(
-        page_to_load=url,
+        page_to_load=page_to_load,
         session_cookie=session_cookie
         )
     except TimeoutException as e:
         print("Timed out!")
-
-
-
-if __name__ == "__main__":
-
-    # try:
-    #     with time_limit(2):
-    #         visit_with_cookies(
-    #     page_to_load="http://127.0.0.1:5000/report/1",
-    #     session_cookie='.eJwljjEOAjEMwP6SmaFp2qS5z6A0TQQS052YEH-nEqO92B-45xnXA4601xU3uD8XHJCu0a1rUatGk9hIylpCNTynrhZoVAJ71NQhLkTD0KeH8NTKXh3NJMmHNJYe0pUDpTcs1TYXVpxVcbgrJ2O4s-eO8BZNYI-8rzj_NwjfHxtBL50.Z7yOkQ.rJCDXfHQcTOdj_BXFawdRWkth34'
-    #     )
-    # except TimeoutException as e:
-    #     print("Timed out!")
-    print(login("127.0.0.1:5000", "admin", "admin"))
     

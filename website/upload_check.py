@@ -1,7 +1,6 @@
 from flask import flash
+from . import ALLOWED_EXTENSIONS, ALLOWED_MIME_TYPE
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
-ALLOWED_MIME_TYPE = {'image/png', 'image/jpeg', 'image/gif', 'image/svg+xml'}
 
 def upload_check(report):
     #Title
