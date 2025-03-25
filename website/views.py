@@ -78,6 +78,6 @@ def delete_report(report_id):
             os.remove(os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], report.filename))
             db.session.delete(report)
             db.session.commit()
-    return Response(200)
+    return Response(status=201)
 
 

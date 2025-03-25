@@ -4,3 +4,4 @@ bot/__pycache__
 website/database.db
 instance/database.db
 venv
+website/static/images/*
