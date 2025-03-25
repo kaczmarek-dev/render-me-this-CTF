@@ -1,6 +1,10 @@
 from website import create_app
+from configparser import ConfigParser
 
-app = create_app()
+config = ConfigParser()
+config.read('config.ini')
+
+app = create_app(config)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host=config['WEBSITE']['serverIP'])

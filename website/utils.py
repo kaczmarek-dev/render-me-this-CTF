@@ -1,4 +1,3 @@
-from .models import Role
 from flask_login import current_user
 from flask import Response
 

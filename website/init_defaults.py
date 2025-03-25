@@ -2,7 +2,7 @@ from . import db
 from .models import User, Role
 from werkzeug.security import generate_password_hash
 
-def init_defaults():
+def init_defaults(admin_username: str, admin_password: str):
     """Pre-Populate User Table"""
     if User.query.first() is None:
         admin = User(
