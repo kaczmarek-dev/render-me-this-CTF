@@ -3,7 +3,7 @@
 <div class="container">
   <h1 align="center">Reports</h1>
   {% for user in user_list %}
-    {% for report in user.reports %}
+    {% for report in user.reports | sort(attribute='time_created', reverse = True) %}
     <div class="card mb-3">
       <div class="row g-0">
         <div class="col-md-4">
@@ -13,6 +13,7 @@
           <div class="card-body">
             <h5 class="card-title" >{{ report.title }}</h5>
             <p class="card-text">{{ report.description }}</p>
+            <p class="card-text text-muted">{{ report.time_created }}</p>
             <p class="card-text"><small class="text-muted">{% if report.verified %} Report verified by administrator. {% else %} Report will be verified by administrator shortly. {% endif %}</small></p>
             <a href="#" class="btn btn-primary" onClick="deleteReport('{{ report.id }}')">Remove Report</a>
             <a href="/static/images/{{report.filename}}" class="btn btn-secondary" >View Image</a>

@@ -25,7 +25,7 @@
       placeholder="Enter description"></textarea>
     
     <label class="upload-area">
-      <input hidden type="file" name="file"/>
+      <input id="fileInput" hidden type="file" name="file"/>
       <span class="upload-area-icon">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="340.531" height="419.116" viewBox="0 0 340.531 419.116">
           <g id="files-new" clip-path="url(#clip-files-new)">
@@ -37,6 +37,7 @@
       <span class="upload-area-description">
         Alternatively, you can select a file by <br/><strong>clicking here</strong>
       </span>
+      <span id="upload-area-filename"></span>
     </label>
 
     <br />

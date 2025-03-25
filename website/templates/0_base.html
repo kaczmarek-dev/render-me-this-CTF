@@ -80,6 +80,29 @@
     window.location.href = "/reports";
   });
   }
+  
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let fileInput = document.getElementById("fileInput");
+    let fileNameDisplay = document.getElementById("upload-area-filename");
+    let uploadTitle = document.querySelector(".upload-area-title");
+    let uploadDescription = document.querySelector(".upload-area-description");
+
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+            fileNameDisplay.textContent = fileInput.files[0].name;
+            uploadTitle.textContent = "File uploaded!"; 
+            uploadDescription.style.display = "none";
+        } else {
+            fileNameDisplay.textContent = "Brak wybranego pliku";
+            uploadTitle.style.display = "block"; 
+            uploadDescription.style.display = "block";
+        }
+    });
+});
+
+
 </script>
 {% endblock %}
   </body>
