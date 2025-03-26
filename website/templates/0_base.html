@@ -22,7 +22,7 @@
     {% if url_for(request.endpoint) != "/login" and url_for(request.endpoint) != "/sign-up" %}
     {% if (user.role == 1) %}
     <nav>
-      <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
+      <button class="nav-item " id="reports" onclick="location.href='/reports';">Reports</button>
       <button class="nav-item" id="report_submition" onclick="location.href='/';">Report Submition</button>
       <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
     </nav>

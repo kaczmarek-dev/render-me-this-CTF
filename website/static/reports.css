@@ -33,6 +33,27 @@ h2 {
 	text-transform: uppercase;
 }
 
+.button-view {
+	border-radius: 10px;
+	border: 1px solid #FF4B2B;
+	background-color: #FF4B2B;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 7px 15px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.button-delete {
+	border-radius: 10px;
+	border: 1px solid #9e9e9e;
+	background-color: #9e9e9e;
+	color: #FFFFFF;
+	font-size: 12px;
+	padding: 7px 15px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
 
 button:active {
 	transform: scale(0.95);
