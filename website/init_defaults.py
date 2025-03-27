@@ -6,8 +6,8 @@ def init_defaults(admin_username: str, admin_password: str):
     """Pre-Populate User Table"""
     if User.query.first() is None:
         admin = User(
-            username="admin",
-            password=generate_password_hash("admin", method='pbkdf2:sha256'),
+            username=admin_username,
+            password=generate_password_hash(admin_password, method='pbkdf2:sha256'),
             role=0
             )
         db.session.add(admin)

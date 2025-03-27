@@ -15,10 +15,10 @@ if __name__ == "__main__":
     while(1):
         reports = session.query(Report).filter_by(verified=False)
         for report in reports:
-            _session_cookie = get_session_cookie(f"{config['WEBSITE']['serverIP']}:{config['WEBSITE']['serverPort']}", {config['ADMIN']['username']}, {config['ADMIN']['password']})
+            _session_cookie = get_session_cookie(f"127.0.0.1:{config['WEBSITE']['serverPort']}", {config['ADMIN']['username']}, {config['ADMIN']['password']})
             visit_with_cookies_time_limit(
                 max_time_seconds=2,
-                page_to_load=f"http://{config['WEBSITE']['serverIP']}:{config['WEBSITE']['serverPort']}/static/images/{report.filename}", 
+                page_to_load=f"http://127.0.0.1:{config['WEBSITE']['serverPort']}/static/images/{report.filename}", 
                 session_cookie=_session_cookie
             )
         reports.update({"verified": True})
