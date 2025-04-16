@@ -3,9 +3,17 @@ Created by Mikołaj Kozok and Mateusz Kaczmarek.
 
 ## Instructions
 ### Run in docker
+1. Default run:
 ```
 docker build -t ctf .
 docker run -p 5000:5000 ctf
+```
+2. Run with prefix (eg. not on `127.0.0.1:5000/`, but `127.0.0.1:5000/prefix`):
+
+This may be helpful when running different ctfs on the same server.
+```
+docker build -t ctf .
+docker run -p 5000:5000 -e PREFIX=/prefix ctf
 ```
 
 ### Run locally
