@@ -4,6 +4,7 @@ FROM python:latest
 # please review all the latest versions here:
 # https://googlechromelabs.github.io/chrome-for-testing/
 ENV CHROMEDRIVER_VERSION=134.0.6998.88
+ENV PREFIX=/
 
 ### install chrome
 RUN apt-get update && apt-get install -y wget && apt-get install -y zip
@@ -26,4 +27,5 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 RUN chmod a+x start.sh
+
 CMD ["./start.sh"]

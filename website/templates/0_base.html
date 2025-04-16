@@ -22,16 +22,16 @@
     {% if url_for(request.endpoint) != "/login" and url_for(request.endpoint) != "/sign-up" %}
     {% if (user.role == 1) %}
     <nav>
-      <button class="nav-item " id="reports" onclick="location.href='/reports';">Reports</button>
-      <button class="nav-item" id="report_submition" onclick="location.href='/';">Report Submition</button>
-      <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
+      <button class="nav-item " id="reports" onclick=location.href="{{ url_for('views.reports') }}";>Reports</button>
+      <button class="nav-item" id="report_submition" onclick=location.href="{{ url_for('views.report_submition') }}";>Report Submition</button>
+      <button class="nav-item" id="logout" onclick=location.href="{{ url_for('auth.logout') }}";>Logout</button>
     </nav>
     {% endif %}
     {% if (user.role == 0) %}
     <nav>
-      <button class="nav-item" id="reports" onclick="location.href='/reports';">Reports</button>
-      <button class="nav-item" id="report_submition" onclick="location.href='/';">Admin Panel</button>
-      <button class="nav-item" id="logout" onclick="location.href='/logout';">Logout</button>
+      <button class="nav-item" id="reports" onclick=location.href="{{ url_for('views.reports') }}";>Reports</button>
+      <button class="nav-item" id="report_submition" onclick=location.href="{{ url_for('views.report_submition') }}";>Admin Panel</button>
+      <button class="nav-item" id="logout" onclick=location.href="{{ url_for('auth.logout') }}";>Logout</button>
     </nav>
     {% endif %}
     {% endif %}
@@ -74,10 +74,10 @@
 {% block javascript %}
     <script type="text/javascript">
       function deleteReport(reportId) {
-  fetch("/delete-report/" + reportId, {
+  fetch("{{ url_for('views.delete_report', report_id=reportId) }}" + reportId, {
     method: "DELETE",
   }).then((_res) => {
-    window.location.href = "/reports";
+    window.location.href = "{{ url_for('views.reports') }}";
   });
   }
   

@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 import requests
 
 
-def visit_with_cookies(page_to_load, session_cookie):
+def visit_with_cookies(page_to_load, session_cookie, prefix):
     print('visit_with_cookies called', flush=True)
     # service = Service(
     #     executable_path="/home/miki/Documents/learn/render-me-this-CTF/website/geckodriver", 
@@ -20,7 +20,7 @@ def visit_with_cookies(page_to_load, session_cookie):
     browser = webdriver.Chrome(options = options)
     try:
         browser.set_page_load_timeout(2)
-        browser.get("http://127.0.0.1:5000")
+        browser.get(f"http://127.0.0.1:5000")
         cookie_data = {
             'name' : 'session',
             'value': session_cookie
@@ -38,9 +38,9 @@ def visit_with_cookies(page_to_load, session_cookie):
     print('visit_with_cookies function successfully executed', flush=True)
 
 
-def get_session_cookie(ip_and_port, username, password):
+def get_session_cookie(ip_and_port, username, password, prefix):
     res = requests.post(
-        url=f"http://{ip_and_port}/login",
+        url=f"http://{ip_and_port}{prefix}/login",
         data={
             "username": username,
             "password": password
@@ -64,12 +64,13 @@ def time_limit(seconds):
     finally:
         signal.alarm(0)
 
-def visit_with_cookies_time_limit(max_time_seconds, page_to_load, session_cookie):
+def visit_with_cookies_time_limit(max_time_seconds, page_to_load, session_cookie, prefix):
     try:
         with time_limit(max_time_seconds):
             visit_with_cookies(
         page_to_load=page_to_load,
-        session_cookie=session_cookie
+        session_cookie=session_cookie,
+        prefix=prefix
         )
     except TimeoutException as e:
         print("Timed out!")

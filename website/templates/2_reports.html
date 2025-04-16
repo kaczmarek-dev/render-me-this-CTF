@@ -7,7 +7,7 @@
     <div class="card mb-3">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="/static/images/{{report.filename}}" class="img-fluid rounded-start" alt="...">
+          <img src="{{ url_for('static', filename='images/' + report.filename) }}" class="img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-8">
           <div class="card-body">
@@ -15,7 +15,7 @@
             <p class="card-text">{{ report.description }}</p>
             <p class="card-text text-muted">{{ report.time_created }}</p>
             <p class="card-text"><small class="text-muted">{% if report.verified %} Report verified by administrator. {% else %} Report will be verified by administrator shortly. {% endif %}</small></p>
-            <a href="/static/images/{{report.filename}}" class="btn btn-secondary button-view" >View Image</a>
+            <a href="{{ url_for('static', filename='images/' + report.filename) }}" class="btn btn-secondary button-view" >View Image</a>
             <a href="#" class="btn btn-secondary button-delete" onClick="deleteReport('{{ report.id }}')">Remove Report</a>
           </div>
         </div>

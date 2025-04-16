@@ -15,6 +15,7 @@ app = Flask(__name__)
 
 def create_app(config: ConfigParser):
     app = Flask(__name__)
+    app.config["APPLICATION_ROOT"] = config['WEBSITE']['prefix']
     app.config['SECRET_KEY'] = config['WEBSITE']['secretKey']
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     app.config["SESSION_COOKIE_HTTPONLY"] = False
@@ -27,8 +28,8 @@ def create_app(config: ConfigParser):
     from .views import views
     from .auth import auth
 
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(views, url_prefix=config['WEBSITE']['prefix'])
+    app.register_blueprint(auth, url_prefix=config['WEBSITE']['prefix'])
 
     
     with app.app_context():

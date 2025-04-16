@@ -6,7 +6,8 @@ if __name__ =="__main__":
     config['WEBSITE'] = {
         'serverIP': '0.0.0.0',
         'serverPort': '5000',
-        'secretKey': str(uuid.uuid4())
+        'secretKey': str(uuid.uuid4()),
+        'prefix': '/'
         }
     config['ADMIN'] = {
         'username': 'admin',
